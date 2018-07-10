@@ -144,6 +144,7 @@ class ConfigurationParserTest extends TestCase
     }
 
     /**
+     * @expectedException \Zend\Mvc\ErrorInterceptor\Exceptions\NoLoggerDefinitionException
      * @throws LoggerClassDefinedAndIgnoredException
      * @throws NoExceptionClassDefined
      * @throws NoLoggerDefinitionException
