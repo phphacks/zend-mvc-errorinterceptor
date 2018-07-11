@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Common\Parse;
+namespace Tests\Utils;
 
 
 class TransferenciaEntreContasException

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fa7720f0142419bd8b95ab4b06430f6",
+    "content-hash": "1703cb949b121f44df464bf0aa1dbd0c",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -36,6 +36,45 @@
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
             "time": "2017-02-14T19:40:03+00:00"
+        },
+        {
+            "name": "phphacks/zend-mvc-di",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phphacks/zend-mvc-di.git",
+                "reference": "725507c386c49f1c9154c3d9306281764e38fc0b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phphacks/zend-mvc-di/zipball/725507c386c49f1c9154c3d9306281764e38fc0b",
+                "reference": "725507c386c49f1c9154c3d9306281764e38fc0b",
+                "shasum": ""
+            },
+            "require": {
+                "zendframework/zend-servicemanager": "^3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zend\\Mvc\\Di\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lucas A. de Araújo",
+                    "email": "lucas.araujo@bevicred.com.br"
+                }
+            ],
+            "description": "Dependency Injection Manager for Zend Framework MVC",
+            "time": "2018-06-29T14:02:06+00:00"
         },
         {
             "name": "psr/container",

@@ -2,6 +2,8 @@
 
 namespace Zend\Mvc\ErrorInterceptor\Common;
 
+use Exception;
+
 class LoggerDefinition
 {
     /**
@@ -20,9 +22,9 @@ class LoggerDefinition
     protected $ignored = [];
 
     /**
-     * @var string[]
+     * @var string
      */
-    protected $parameters = [];
+    protected $factoryName;
 
     /**
      * @return string
@@ -73,20 +75,31 @@ class LoggerDefinition
     }
 
     /**
-     * @return string[]
+     * @return string
      */
-    public function getParameters(): array
+    public function getFactoryName(): string
     {
-        return $this->parameters;
+        return $this->factoryName;
     }
 
     /**
-     * @param string[] $parameters
+     * @param string $factoryName
      */
-    public function setParameters(array $parameters)
+    public function setFactoryName(string $factoryName)
     {
-        $this->parameters = $parameters;
+        $this->factoryName = $factoryName;
     }
+
+    public function canLog(Exception $exception): bool
+    {
+        if (in_array($exception, $this->exceptions)
+        && !in_array($exception, $this->ignored)){
+            return true;
+        }
+
+        return false;
+    }
+
 
 
 }

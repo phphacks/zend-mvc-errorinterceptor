@@ -52,6 +52,4 @@ class ErrorLogging
         $this->loggers[] = $logger;
     }
 
-
-
 }
