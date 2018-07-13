@@ -3,7 +3,4 @@
 namespace Tests\Utils;
 
 
-class TransferenciaEntreContasException
-{
-
-}
+class TransferenciaEntreContasException extends \Exception { }
