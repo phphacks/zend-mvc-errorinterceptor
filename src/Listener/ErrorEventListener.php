@@ -20,11 +20,6 @@ class ErrorEventListener extends AbstractListenerAggregate
      */
     private $resolver;
 
-    /**
-     * @var JsonErrorResponseFactoryInterface
-     */
-    private $jsonErrorResponseFactory;
-
     public function __construct(array $configuration)
     {
         $this->resolver = new Resolver($configuration);
@@ -66,29 +61,50 @@ class ErrorEventListener extends AbstractListenerAggregate
      */
     public function handleExceptionError(MvcEvent $event)
     {
-        /** @var Exception $exception */
-        $exception = $event->getParam('exception');
-        if (!$exception){
-            return $event;
-        }
-        $serviceManager = $this->getServiceManagerFromMvcEvent($event);
+        return $this->handleError($event);
+    }
 
-        $errorLogging = $this->resolver->resolveConfiguration($event);
+    /**
+     * @param MvcEvent $event
+     * @return MvcEvent
+     * @throws \Interop\Container\Exception\ContainerException
+     * @throws \ReflectionException
+     * @throws \Zend\Mvc\Di\Exceptions\UnsolvableDependencyException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Logger\InvalidFactoryException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Logger\InvalidLoggerClassException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoLoggerDefinitionException
+     */
+    private function handleError(MvcEvent $event): MvcEvent
+    {
+        if ($event->isError()) {
 
-        foreach ($errorLogging->getLoggers() as $logger){
-            if ($logger->canLog($exception)){
-                /** @var Logger $loggerInstance */
-                $loggerInstance = $serviceManager->get($logger->getClassName());
-                $loggerInstance->info($exception->getMessage());
+            /** @var Exception $exception */
+            $exception = $event->getParam('exception');
+            if (!$exception) {
+                return $event;
             }
+            $serviceManager = $this->getServiceManagerFromMvcEvent($event);
+
+            $errorLogging = $this->resolver->resolveConfiguration($event);
+
+            foreach ($errorLogging->getLoggers() as $logger) {
+                if ($logger->canLog($exception)) {
+                    /** @var Logger $loggerInstance */
+                    $loggerInstance = $serviceManager->get($logger->getClassName());
+                    $loggerInstance->info($exception->getMessage());
+                }
+            }
+
+            /** @var JsonErrorResponseFactoryInterface $jsonErrorResponseFactory */
+            $jsonErrorResponseFactory = $serviceManager->get($errorLogging->getResponse());
+
+            $event->setViewModel($jsonErrorResponseFactory->createResponse($exception->getMessage()));
+            $event->stopPropagation(true);
         }
-
-        $event->getResponse()->setStatusCode(400);
-        /** @var JsonErrorResponseFactoryInterface $jsonErrorResponseFactory */
-        $jsonErrorResponseFactory = $serviceManager->get($errorLogging->getResponse());
-
-        $event->setViewModel($jsonErrorResponseFactory->createResponse($exception->getMessage()));
-
         return $event;
     }
 
@@ -102,16 +118,23 @@ class ErrorEventListener extends AbstractListenerAggregate
         return $application->getServiceManager();
     }
 
-    private function setResponse(MvcEvent $event, string $message)
+    /**
+     * @param MvcEvent $event
+     * @return MvcEvent
+     * @throws \Interop\Container\Exception\ContainerException
+     * @throws \ReflectionException
+     * @throws \Zend\Mvc\Di\Exceptions\UnsolvableDependencyException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Logger\InvalidFactoryException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Logger\InvalidLoggerClassException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined
+     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoLoggerDefinitionException
+     */
+    public function handlePhpError(MvcEvent $event)
     {
-        $event->getResponse()->setStatusCode(400);
-
+        return $this->handleError($event);
     }
-
-//    public function handlePhpError(MvcEvent $event)
-//    {
-//
-//        return $event;
-//    }
 
 }

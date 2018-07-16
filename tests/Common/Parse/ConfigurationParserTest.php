@@ -10,7 +10,6 @@ use Tests\Utils\JsonErrorResponseFactory;
 use Tests\Utils\SmsErrorLogger;
 use Tests\Utils\SmsErrorLoggerFactory;
 use Tests\Utils\TransferenciaEntreContasException;
-use Tests\Utils\WrongJsonErrorResponseFactory;
 use Zend\Mvc\ErrorInterceptor\Common\Parse\ConfigurationParser;
 use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassDefinedAndIgnoredException;
 use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined;

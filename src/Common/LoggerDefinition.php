@@ -90,10 +90,13 @@ class LoggerDefinition
         $this->factoryName = $factoryName;
     }
 
+    /**
+     * @param Exception $exception
+     * @return bool
+     */
     public function canLog(Exception $exception): bool
     {
-        if (in_array($exception, $this->exceptions)
-        && !in_array($exception, $this->ignored)){
+        if (in_array(get_class($exception), $this->exceptions) && !in_array(get_class($exception), $this->ignored)){
             return true;
         }
 
