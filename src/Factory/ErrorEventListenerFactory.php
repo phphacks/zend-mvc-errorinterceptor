@@ -14,10 +14,11 @@ class ErrorEventListenerFactory implements FactoryInterface
         $globalConfiguration = $container->get('ApplicationConfig');
         $configuration = [];
 
-        if (array_key_exists(Configuration::ERROR_LOGGING, $globalConfiguration)){
-            $configuration = $globalConfiguration[Configuration::ERROR_LOGGING][$requestedName];
-        }
+//        if (array_key_exists(Configuration::ERROR_LOGGING, $globalConfiguration)){
+//            $configuration = $globalConfiguration[Configuration::ERROR_LOGGING];
+//        }
 
-        return new $requestedName($configuration);
+//        return new $requestedName($configuration);
+        return new $requestedName($globalConfiguration);
     }
 }

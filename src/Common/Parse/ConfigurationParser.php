@@ -5,10 +5,11 @@ namespace Zend\Mvc\ErrorInterceptor\Common\Parse;
 use Zend\Mvc\ErrorInterceptor\Common\Enums\Configuration;
 use Zend\Mvc\ErrorInterceptor\Common\ErrorLogging;
 
-use Zend\Mvc\ErrorInterceptor\Exceptions\LoggerClassDefinedAndIgnoredException;
-use Zend\Mvc\ErrorInterceptor\Exceptions\LoggerClassException;
-use Zend\Mvc\ErrorInterceptor\Exceptions\NoExceptionClassDefined;
-use Zend\Mvc\ErrorInterceptor\Exceptions\NoLoggerDefinitionException;
+use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException;
+use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassDefinedAndIgnoredException;
+use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException;
+use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined;
+use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoLoggerDefinitionException;
 use Zend\Mvc\ErrorInterceptor\Common\LoggerDefinition;
 
 class ConfigurationParser
@@ -35,9 +36,9 @@ class ConfigurationParser
                 $loggerDefinition = new LoggerDefinition();
 
                 $loggerDefinition->setClassName($this->hasLoggerClass($logger));
+                $loggerDefinition->setFactoryName($this->hasFactoryName($logger));
                 $loggerDefinition->setExceptions($this->parseExceptionsList($logger, Configuration::TYPEOF));
                 $loggerDefinition->setIgnored($this->parseIgnoredList($logger, Configuration::IGNORED));
-                $loggerDefinition->setParameters($logger[Configuration::CONFIG]);
 
                 $this->verifyExceptionClassAndIgnoredList($logger);
 
@@ -80,6 +81,17 @@ class ConfigurationParser
         return $loggerConfiguration[Configuration::LOGGER];
     }
 
+    private function hasFactoryName(array $loggerConfiguration): string
+    {
+        if (!isset($loggerConfiguration[Configuration::FACTORY])
+            || $loggerConfiguration[Configuration::FACTORY] == null
+            || $loggerConfiguration[Configuration::FACTORY] == ''){
+            return '';
+        }
+
+        return $loggerConfiguration[Configuration::FACTORY];
+    }
+
     /**
      * @param array $configuration
      * @throws NoLoggerDefinitionException
@@ -92,10 +104,17 @@ class ConfigurationParser
         }
     }
 
+    /**
+     * @param array $loggingConfiguration
+     * @return string
+     * @throws NoJsonErrorResponseFactoryClassDefinedException
+     */
     public function parseResponse(array $loggingConfiguration): string
     {
-        if (is_null($loggingConfiguration[Configuration::ERROR_LOGGING][Configuration::RESPONSE])) {
-            return '';
+        if (!isset($loggingConfiguration[Configuration::ERROR_LOGGING][Configuration::RESPONSE])
+            || $loggingConfiguration[Configuration::ERROR_LOGGING][Configuration::RESPONSE] == null
+            || $loggingConfiguration[Configuration::ERROR_LOGGING][Configuration::RESPONSE] == '') {
+            throw new NoJsonErrorResponseFactoryClassDefinedException('Invalid error response factory');
         } else {
             return $loggingConfiguration[Configuration::ERROR_LOGGING][Configuration::RESPONSE];
         }

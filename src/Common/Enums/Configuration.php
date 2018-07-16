@@ -11,7 +11,5 @@ interface Configuration
     const LOGGER = 'logger';
     const TYPEOF = 'typeof';
     const IGNORED = 'ignored';
-    const CONFIG = 'config';
-    const CONFIG_ADAPTER = 'adapter';
-    const CONFIG_SUBJECTS = 'subjects';
+    const FACTORY = 'factory';
 }
