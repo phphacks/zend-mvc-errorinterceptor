@@ -4,7 +4,6 @@
     "type": "library",
     "require": {
         "zendframework/zend-mvc": "^3.1",
-        "respect/validation": "^1.1",
         "zendframework/zend-log": "^2.10",
         "phphacks/zend-mvc-di": "^1.0"
     },
