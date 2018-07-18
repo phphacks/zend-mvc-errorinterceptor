@@ -1,5 +1,5 @@
 <?php
 
-namespace Zend\Mvc\ErrorInterceptor\Exceptions\Parse;
+namespace Zend\Mvc\ErrorLogger\Exceptions\Parse;
 
 class LoggerClassException extends \Exception { }

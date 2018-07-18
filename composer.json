@@ -1,5 +1,5 @@
 {
-    "name": "phphacks/zend-mvc-errorinterceptor",
+    "name": "phphacks/zend-mvc-errorlogger",
     "description": "Error event listener for Zend MVC",
     "type": "library",
     "require": {
@@ -14,7 +14,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Zend\\Mvc\\ErrorInterceptor\\" : "src"
+            "Zend\\Mvc\\ErrorLogger\\" : "src"
         }
     },
     "autoload-dev": {

@@ -1,17 +1,17 @@
 <?php
 
-namespace Zend\Mvc\ErrorInterceptor\Logger;
+namespace Zend\Mvc\ErrorLogger\Logger;
 
 
 use Zend\Log\Logger;
 use Zend\Mvc\Di\Dependency\Injection\InjectableFactory;
-use Zend\Mvc\ErrorInterceptor\Common\ErrorLogging;
-use Zend\Mvc\ErrorInterceptor\Common\LoggerDefinition;
-use Zend\Mvc\ErrorInterceptor\Common\Parse\ConfigurationParser;
-use Zend\Mvc\ErrorInterceptor\Custom\JsonErrorResponseFactoryInterface;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Logger\InvalidFactoryException;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Logger\InvalidLoggerClassException;
+use Zend\Mvc\ErrorLogger\Common\ErrorLogging;
+use Zend\Mvc\ErrorLogger\Common\LoggerDefinition;
+use Zend\Mvc\ErrorLogger\Common\Parse\ConfigurationParser;
+use Zend\Mvc\ErrorLogger\Custom\JsonErrorResponseFactoryInterface;
+use Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidFactoryException;
+use Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException;
+use Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidLoggerClassException;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\Factory\FactoryInterface;
 use \Zend\ServiceManager\ServiceLocatorInterface;
@@ -36,19 +36,19 @@ class Resolver
     }
 
     /**
-     *
      * @param MvcEvent $event
-     * @return \Zend\Mvc\ErrorInterceptor\Common\LoggerDefinition[]
+     * @return ErrorLogging
+     * @throws InvalidFactoryException
+     * @throws InvalidJsonErrorResponseFactoryClassException
+     * @throws InvalidLoggerClassException
+     * @throws \Interop\Container\Exception\ContainerException
      * @throws \ReflectionException
      * @throws \Zend\Mvc\Di\Exceptions\UnsolvableDependencyException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoLoggerDefinitionException
-     * @throws InvalidLoggerClassException
-     * @throws InvalidFactoryException
-     * @throws \Interop\Container\Exception\ContainerException
-     * @throws InvalidJsonErrorResponseFactoryClassException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException
      */
     public function resolveConfiguration(MvcEvent $event): ErrorLogging
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Zend\Mvc\ErrorInterceptor\Exceptions\Logger;
+namespace Zend\Mvc\ErrorLogger\Exceptions\Logger;
 
 
 class InvalidFactoryException extends \Exception { }

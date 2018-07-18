@@ -2,11 +2,11 @@
 
 return [
     'listeners' => [
-        "Zend\Mvc\ErrorInterceptor\Listener\ErrorEventListener"
+        "Zend\Mvc\ErrorLogger\Listener\ErrorEventListener"
     ],
     'service_manager' => [
         'factories' => [
-            "Zend\Mvc\ErrorInterceptor\Listener\ErrorEventListener" => Zend\Mvc\ErrorInterceptor\Factory\ErrorEventListenerFactory::class
+            "Zend\Mvc\ErrorLogger\Listener\ErrorEventListener" => Zend\Mvc\ErrorLogger\Factory\ErrorEventListenerFactory::class
         ]
     ]
 ];

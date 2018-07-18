@@ -1,6 +1,6 @@
 <?php
 
-namespace Zend\Mvc\ErrorInterceptor\Common;
+namespace Zend\Mvc\ErrorLogger\Common;
 
 use Exception;
 

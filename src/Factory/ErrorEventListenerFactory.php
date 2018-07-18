@@ -1,9 +1,8 @@
 <?php
 
-namespace Zend\Mvc\ErrorInterceptor\Factory;
+namespace Zend\Mvc\ErrorLogger\Factory;
 
 use Interop\Container\ContainerInterface;
-use Zend\Mvc\ErrorInterceptor\Common\Enums\Configuration;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 class ErrorEventListenerFactory implements FactoryInterface
@@ -12,13 +11,7 @@ class ErrorEventListenerFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         $globalConfiguration = $container->get('ApplicationConfig');
-        $configuration = [];
 
-//        if (array_key_exists(Configuration::ERROR_LOGGING, $globalConfiguration)){
-//            $configuration = $globalConfiguration[Configuration::ERROR_LOGGING];
-//        }
-
-//        return new $requestedName($configuration);
         return new $requestedName($globalConfiguration);
     }
 }

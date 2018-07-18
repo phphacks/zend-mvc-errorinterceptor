@@ -26,7 +26,7 @@ class ErrorEventListenerTest extends TestCase
 
         $config = [
             'modules' => [
-                'Zend\Mvc\ErrorInterceptor',
+                'Zend\Mvc\ErrorLogger',
                 'Zend\Router',
             ],
             'module_listener_options' => [],

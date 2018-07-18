@@ -2,7 +2,7 @@
 
 namespace Tests\Utils;
 
-use Zend\Mvc\ErrorInterceptor\Custom\JsonErrorResponseFactoryInterface;
+use Zend\Mvc\ErrorLogger\Custom\JsonErrorResponseFactoryInterface;
 use Zend\View\Model\JsonModel;
 
 class JsonErrorResponseFactory implements JsonErrorResponseFactoryInterface

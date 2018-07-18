@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Zend\Mvc\ErrorInterceptor\Exceptions\Logger;
+namespace Zend\Mvc\ErrorLogger\Exceptions\Logger;
 
 
 class InvalidJsonErrorResponseFactoryClassException extends \Exception { }

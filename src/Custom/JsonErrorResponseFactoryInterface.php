@@ -1,6 +1,6 @@
 <?php
 
-namespace Zend\Mvc\ErrorInterceptor\Custom;
+namespace Zend\Mvc\ErrorLogger\Custom;
 
 use Zend\View\Model\JsonModel;
 

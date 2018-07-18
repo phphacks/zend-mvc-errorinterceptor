@@ -10,10 +10,10 @@ use Tests\Utils\JsonErrorResponseFactory;
 use Tests\Utils\SmsErrorLogger;
 use Tests\Utils\SmsErrorLoggerFactory;
 use Tests\Utils\TransferenciaEntreContasException;
-use Zend\Mvc\ErrorInterceptor\Common\Parse\ConfigurationParser;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassDefinedAndIgnoredException;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoLoggerDefinitionException;
+use Zend\Mvc\ErrorLogger\Common\Parse\ConfigurationParser;
+use Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException;
+use Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined;
+use Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException;
 
 
 class ConfigurationParserTest extends TestCase
@@ -124,11 +124,12 @@ class ConfigurationParserTest extends TestCase
 
 
     /**
-     * @expectedException \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined
+     * @expectedException \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined
      * @throws LoggerClassDefinedAndIgnoredException
+     * @throws NoExceptionClassDefined
      * @throws NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      */
     public function testIfNoExceptionClassDefinedForLogger()
     {
@@ -143,11 +144,12 @@ class ConfigurationParserTest extends TestCase
     }
 
     /**
-     * @expectedException \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
+     * @expectedException \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
      * @throws LoggerClassDefinedAndIgnoredException
+     * @throws NoExceptionClassDefined
      * @throws NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      */
     public function testIfExceptionClassExistsOnIgnoredList()
     {
@@ -162,11 +164,12 @@ class ConfigurationParserTest extends TestCase
     }
 
     /**
-     * @expectedException \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoLoggerDefinitionException
+     * @expectedException \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException
      * @throws LoggerClassDefinedAndIgnoredException
      * @throws NoExceptionClassDefined
      * @throws NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      */
     public function testIfConfigurationHasNoLoggers()
     {
@@ -180,11 +183,12 @@ class ConfigurationParserTest extends TestCase
     }
 
     /**
-     * @expectedException \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException
+     * @expectedException \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
      * @throws LoggerClassDefinedAndIgnoredException
+     * @throws NoExceptionClassDefined
      * @throws NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      */
     public function testIfLoggerConfigurationHasNoLoggerClass()
     {
@@ -199,11 +203,12 @@ class ConfigurationParserTest extends TestCase
     }
 
     /**
-     * @expectedException \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
+     * @expectedException \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      * @throws LoggerClassDefinedAndIgnoredException
      * @throws NoExceptionClassDefined
      * @throws NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
+     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      */
     public function testIfConfigurationHasJsonErrorResponseFactory()
     {

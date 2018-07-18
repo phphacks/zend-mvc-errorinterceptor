@@ -1,16 +1,16 @@
 <?php
 
-namespace Zend\Mvc\ErrorInterceptor\Common\Parse;
+namespace Zend\Mvc\ErrorLogger\Common\Parse;
 
-use Zend\Mvc\ErrorInterceptor\Common\Enums\Configuration;
-use Zend\Mvc\ErrorInterceptor\Common\ErrorLogging;
+use Zend\Mvc\ErrorLogger\Common\Enums\Configuration;
+use Zend\Mvc\ErrorLogger\Common\ErrorLogging;
 
-use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassDefinedAndIgnoredException;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\LoggerClassException;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoExceptionClassDefined;
-use Zend\Mvc\ErrorInterceptor\Exceptions\Parse\NoLoggerDefinitionException;
-use Zend\Mvc\ErrorInterceptor\Common\LoggerDefinition;
+use Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException;
+use Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException;
+use Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException;
+use Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined;
+use Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException;
+use Zend\Mvc\ErrorLogger\Common\LoggerDefinition;
 
 class ConfigurationParser
 {
@@ -19,8 +19,9 @@ class ConfigurationParser
      * @return null|ErrorLogging
      * @throws LoggerClassDefinedAndIgnoredException
      * @throws LoggerClassException
-     * @throws NoLoggerDefinitionException
      * @throws NoExceptionClassDefined
+     * @throws NoJsonErrorResponseFactoryClassDefinedException
+     * @throws NoLoggerDefinitionException
      */
     public function parse($configuration)
     {

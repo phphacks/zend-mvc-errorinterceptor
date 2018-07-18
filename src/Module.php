@@ -1,6 +1,6 @@
 <?php
 
-namespace Zend\Mvc\ErrorInterceptor;
+namespace Zend\Mvc\ErrorLogger;
 
 class Module
 {

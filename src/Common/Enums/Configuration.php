@@ -1,6 +1,6 @@
 <?php
 
-namespace Zend\Mvc\ErrorInterceptor\Common\Enums;
+namespace Zend\Mvc\ErrorLogger\Common\Enums;
 
 interface Configuration
 {
