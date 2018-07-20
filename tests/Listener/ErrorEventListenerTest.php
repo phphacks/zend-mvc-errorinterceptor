@@ -5,7 +5,6 @@ namespace Tests\Listener;
 use PHPUnit\Framework\TestCase;
 use Tests\Utils\DatabaseErrorLogger;
 use Tests\Utils\DatabaseErrorLoggerFactory;
-use Tests\Utils\JsonErrorResponseFactory;
 use Tests\Utils\SmsErrorLogger;
 use Tests\Utils\SmsErrorLoggerFactory;
 use Tests\Utils\TransferenciaEntreContasException;
@@ -30,8 +29,7 @@ class ErrorEventListenerTest extends TestCase
                 'Zend\Router',
             ],
             'module_listener_options' => [],
-            'error-logging' => [
-                'response' => JsonErrorResponseFactory::class,
+            'error_logging' => [
                 'loggers' => [
                     [
                         'logger' => DatabaseErrorLogger::class,

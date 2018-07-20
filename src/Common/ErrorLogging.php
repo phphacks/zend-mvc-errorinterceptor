@@ -16,22 +16,6 @@ class ErrorLogging
     public $loggers = [];
 
     /**
-     * @return string
-     */
-    public function getResponse(): string
-    {
-        return $this->response;
-    }
-
-    /**
-     * @param string $response
-     */
-    public function setResponse(string $response)
-    {
-        $this->response = $response;
-    }
-
-    /**
      * @return LoggerDefinition[]
      */
     public function getLoggers(): array
