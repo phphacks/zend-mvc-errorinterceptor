@@ -3,6 +3,7 @@
 namespace Zend\Mvc\ErrorLogger\Common;
 
 use Exception;
+use TypeError;
 
 class LoggerDefinition
 {
@@ -91,10 +92,10 @@ class LoggerDefinition
     }
 
     /**
-     * @param Exception $exception
+     * @param Exception|TypeError $exception
      * @return bool
      */
-    public function canLog(Exception $exception): bool
+    public function canLog($exception): bool
     {
         if (in_array(get_class($exception), $this->exceptions) && !in_array(get_class($exception), $this->ignored)){
             return true;
