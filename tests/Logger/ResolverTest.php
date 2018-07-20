@@ -5,14 +5,12 @@ namespace Tests\Logger;
 use Tests\Utils\DatabaseErrorLoggerFactory;
 use Tests\Utils\SmsErrorLoggerFactory;
 use Tests\Utils\WrongErrorLogger;
-use Tests\Utils\WrongJsonErrorResponseFactory;
 use Tests\Utils\WrongLoggerFactory;
 use Zend\Http\Request as HttpRequest;
 use Zend\Http\Response as HttpResponse;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use Tests\Utils\DatabaseErrorLogger;
-use Tests\Utils\JsonErrorResponseFactory;
 use Tests\Utils\SmsErrorLogger;
 use Tests\Utils\TransferenciaEntreContasException;
 use Zend\EventManager\EventManager;
@@ -81,8 +79,7 @@ class ResolverTest extends TestCase
     private function createConfigurationWithTwoLoggers()
     {
         return [
-            'error-logging' => [
-                'response' => JsonErrorResponseFactory::class,
+            'error_logging' => [
                 'loggers' => [
                     [
                         'logger' => DatabaseErrorLogger::class,
@@ -104,8 +101,7 @@ class ResolverTest extends TestCase
     private function createConfigurationWithSomeLoggersHavingFactory()
     {
         return [
-            'error-logging' => [
-                'response' => JsonErrorResponseFactory::class,
+            'error_logging' => [
                 'loggers' => [
                     [
                         'logger' => DatabaseErrorLogger::class,
@@ -126,8 +122,7 @@ class ResolverTest extends TestCase
     private function createConfigurationWithWrongLogger()
     {
         return [
-            'error-logging' => [
-                'response' => JsonErrorResponseFactory::class,
+            'error_logging' => [
                 'loggers' => [
                     [
                         'logger' => WrongErrorLogger::class,
@@ -142,8 +137,7 @@ class ResolverTest extends TestCase
     private function createConfigurationWithWrongFactory()
     {
         return [
-            'error-logging' => [
-                'response' => JsonErrorResponseFactory::class,
+            'error_logging' => [
                 'loggers' => [
                     [
                         'logger' => SmsErrorLogger::class,
@@ -162,59 +156,16 @@ class ResolverTest extends TestCase
      * @throws \ReflectionException
      * @throws \Zend\Mvc\Di\Exceptions\UnsolvableDependencyException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidFactoryException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidLoggerClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      */
     public function testIfLoggerFactoryDontImplementsFactoryInterface()
     {
         // arrange
         $resolver = new Resolver($this->createConfigurationWithWrongFactory());
-
-        // act
-        $resolver->resolveConfiguration($this->mvcEvent);
-
-        // assert
-    }
-
-    private function createConfigurationWithWrongJsonErrorResponseFactory()
-    {
-        return [
-            'error-logging' => [
-                'response' => WrongJsonErrorResponseFactory::class,
-                'loggers' => [
-                    [
-                        'logger' => DatabaseErrorLogger::class,
-                        'factory' => DatabaseErrorLoggerFactory::class,
-                        'typeof' => [TransferenciaEntreContasException::class],
-                        'ignored' => []
-                    ]
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * @expectedException \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException
-     * @throws \Interop\Container\Exception\ContainerException
-     * @throws \ReflectionException
-     * @throws \Zend\Mvc\Di\Exceptions\UnsolvableDependencyException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidFactoryException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidLoggerClassException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
-     */
-    public function testIfJsonErrorResponseFactoryImplementsJsonErrorResponseFactoryInterface()
-    {
-        // arrange
-        $resolver = new Resolver($this->createConfigurationWithWrongJsonErrorResponseFactory());
 
         // act
         $resolver->resolveConfiguration($this->mvcEvent);
@@ -228,13 +179,11 @@ class ResolverTest extends TestCase
      * @throws \ReflectionException
      * @throws \Zend\Mvc\Di\Exceptions\UnsolvableDependencyException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidFactoryException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidLoggerClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      */
     public function testIfLoggerDontExtendsZendLoggerWasInformed()
     {
@@ -252,13 +201,11 @@ class ResolverTest extends TestCase
      * @throws \ReflectionException
      * @throws \Zend\Mvc\Di\Exceptions\UnsolvableDependencyException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidFactoryException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidLoggerClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      */
     public function testIfGetLoggersResolveTwoLoggers()
     {
@@ -277,13 +224,11 @@ class ResolverTest extends TestCase
      * @throws \ReflectionException
      * @throws \Zend\Mvc\Di\Exceptions\UnsolvableDependencyException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidFactoryException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidLoggerClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined
      * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
      */
     public function testIfGetLoggersPutLoggersInServiceManager()
     {
@@ -297,32 +242,6 @@ class ResolverTest extends TestCase
         foreach ($errorLogging->getLoggers() as $logger) {
             self::assertTrue($this->container->has($logger->getClassName()));
         }
-
-    }
-
-    /**
-     * @throws \Interop\Container\Exception\ContainerException
-     * @throws \ReflectionException
-     * @throws \Zend\Mvc\Di\Exceptions\UnsolvableDependencyException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidFactoryException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidJsonErrorResponseFactoryClassException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Logger\InvalidLoggerClassException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException
-     * @throws \Zend\Mvc\ErrorLogger\Exceptions\Parse\NoLoggerDefinitionException
-     */
-    public function testIfResolveConfigurationPutJsonErrorResponseFactoryInServiceManager()
-    {
-        // arrange
-        $resolver = new Resolver($this->createConfigurationWithSomeLoggersHavingFactory());
-
-        // act
-        $errorLogging = $resolver->resolveConfiguration($this->mvcEvent);
-
-        // assert
-        self::assertTrue($this->container->has($errorLogging->getResponse()));
 
     }
 }

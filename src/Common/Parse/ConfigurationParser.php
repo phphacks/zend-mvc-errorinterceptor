@@ -5,7 +5,6 @@ namespace Zend\Mvc\ErrorLogger\Common\Parse;
 use Zend\Mvc\ErrorLogger\Common\Enums\Configuration;
 use Zend\Mvc\ErrorLogger\Common\ErrorLogging;
 
-use Zend\Mvc\ErrorLogger\Exceptions\Parse\NoJsonErrorResponseFactoryClassDefinedException;
 use Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassDefinedAndIgnoredException;
 use Zend\Mvc\ErrorLogger\Exceptions\Parse\LoggerClassException;
 use Zend\Mvc\ErrorLogger\Exceptions\Parse\NoExceptionClassDefined;
@@ -20,7 +19,6 @@ class ConfigurationParser
      * @throws LoggerClassDefinedAndIgnoredException
      * @throws LoggerClassException
      * @throws NoExceptionClassDefined
-     * @throws NoJsonErrorResponseFactoryClassDefinedException
      * @throws NoLoggerDefinitionException
      */
     public function parse($configuration)
@@ -28,7 +26,6 @@ class ConfigurationParser
         if (isset($configuration[Configuration::ERROR_LOGGING])) {
 
             $errorLogging = new ErrorLogging();
-            $errorLogging->setResponse($this->parseResponse($configuration));
 
             $this->hasLoggers($configuration[Configuration::ERROR_LOGGING]);
 
@@ -102,22 +99,6 @@ class ConfigurationParser
         if (!isset($configuration[Configuration::LOGGERS])
         || Count($configuration[Configuration::LOGGERS]) == 0) {
             throw new NoLoggerDefinitionException('There is no Logger definitions in configuration');
-        }
-    }
-
-    /**
-     * @param array $loggingConfiguration
-     * @return string
-     * @throws NoJsonErrorResponseFactoryClassDefinedException
-     */
-    public function parseResponse(array $loggingConfiguration): string
-    {
-        if (!isset($loggingConfiguration[Configuration::ERROR_LOGGING][Configuration::RESPONSE])
-            || $loggingConfiguration[Configuration::ERROR_LOGGING][Configuration::RESPONSE] == null
-            || $loggingConfiguration[Configuration::ERROR_LOGGING][Configuration::RESPONSE] == '') {
-            throw new NoJsonErrorResponseFactoryClassDefinedException('Invalid error response factory');
-        } else {
-            return $loggingConfiguration[Configuration::ERROR_LOGGING][Configuration::RESPONSE];
         }
     }
 
