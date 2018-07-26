@@ -6,6 +6,7 @@ namespace Zend\Mvc\ErrorLogger\Listener;
 use Exception;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\AbstractListenerAggregate;
+use Zend\Http\Request;
 use Zend\Mvc\ErrorLogger\Logger\Resolver;
 use Zend\Mvc\MvcEvent;
 use Zend\Log\Logger;
@@ -90,9 +91,20 @@ class ErrorEventListener extends AbstractListenerAggregate
 
             foreach ($errorLogging->getLoggers() as $logger) {
                 if ($logger->canLog($exception)) {
+                    /** @var Request $request */
+                    $request = $event->getRequest();
+
+
                     /** @var Logger $loggerInstance */
                     $loggerInstance = $serviceManager->get($logger->getClassName());
-                    $loggerInstance->info($exception->getMessage());
+                    $loggerInstance->err(
+                        $exception->getMessage(),[
+                            'trace' => $exception->getTrace(),
+                            'file' => $exception->getFile(),
+                            'line' => $exception->getLine(),
+                            'code' => $exception->getCode(),
+                            'request' => $request->toString() . json_encode($request->getPost())
+                        ]);
                 }
             }
         }

@@ -97,8 +97,22 @@ class LoggerDefinition
      */
     public function canLog($exception): bool
     {
-        if (in_array(get_class($exception), $this->exceptions) && !in_array(get_class($exception), $this->ignored)){
+        if ((in_array(get_class($exception), $this->exceptions) ||
+                $this->checkInstanceInList($exception, $this->exceptions)) &&
+            !in_array(get_class($exception), $this->ignored) &&
+            !$this->checkInstanceInList($exception, $this->ignored)){
             return true;
+        }
+
+        return false;
+    }
+
+    private function checkInstanceInList($exceptionToCheck, array $exceptions): bool
+    {
+        foreach ($exceptions as $exception) {
+            if ($exceptionToCheck instanceof $exception ){
+                return true;
+            }
         }
 
         return false;
